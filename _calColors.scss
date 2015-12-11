@@ -1,0 +1,23 @@
+$hovercolor: gray;
+$shadingcolor: #99ccff;
+.shaded{
+	background-color: #99ccff;
+	text-align: center;
+	border-style: solid;
+  border-color: navy;
+  border-width: 2px;
+  font-size: 2vw;
+  padding: 1vw;
+  width:13%;
+
+}
+.unshaded{
+	background-color: white;
+	text-align: center;
+	border-style: solid;
+  border-color: navy;
+  border-width: 2px;
+  font-size: 2vw;
+  padding: 1vw;
+  width:13%;
+}

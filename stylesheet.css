@@ -1,0 +1,337 @@
+.shaded {
+  background-color: #99ccff;
+  text-align: center;
+  border-style: solid;
+  border-color: navy;
+  border-width: 2px;
+  font-size: 2vw;
+  padding: 1vw;
+  width: 13%; }
+
+.unshaded {
+  background-color: white;
+  text-align: center;
+  border-style: solid;
+  border-color: navy;
+  border-width: 2px;
+  font-size: 2vw;
+  padding: 1vw;
+  width: 13%; }
+
+.error-text {
+  font-size: 0.8vw;
+  left: -8vw;
+  top: -1vw;
+  color: red;
+  font-style: bold; }
+
+.highlight {
+  background-color: yellow; }
+
+.task-list {
+  display: block;
+  font: 1vw Helvetica, Arial;
+  text-align: left;
+  display: block;
+  top: 14vw; }
+
+#textBox4 {
+  width: 35vw;
+  background-color: white;
+  margin-left: 6vw;
+  margin-top: 1vw;
+  border-color: black;
+  border-style: solid;
+  border-width: 2px;
+  padding: 2vw; }
+
+.pcode {
+  margin: 0;
+  font-family: 1vw Helvetica, Arial;
+  position: relative;
+  left: 1vw; }
+
+.pcode2 {
+  position: relative;
+  font-family: 1vw Helvetica, Arial;
+  left: 1vw; }
+
+.oldtext {
+  margin-left: 2vw;
+  margin-bottom: 0;
+  font-size: 1.5vw;
+  font-style: italic; }
+
+#mapheader {
+  font: 2vw "Helvetica Neue", Helvetica, Arial;
+  text-align: center; }
+
+.headingtext {
+  font: 2vw "Helvetica Neue", Helvetica, Arial;
+  text-align: center; }
+
+.todaysdate {
+  border-color: red;
+  border-style: solid;
+  text-align: center;
+  font-size: 2vw; }
+
+.textbox {
+  width: 30vw;
+  height: 10vw;
+  position: relative;
+  display: inherit;
+  left: 3vw;
+  font-size: 1vw;
+  font-family: Arial;
+  margin-bottom: 1vw; }
+
+#formpage {
+  font-size: 1.5vw; }
+
+.calendarMonth {
+  font: 4vw "Helvetica Neue", Helvetica, Arial;
+  text-align: center;
+  margin: 1vw; }
+
+.month-header {
+  z-index: 2;
+  border-bottom: 2px;
+  border-style: solid; }
+
+#postcode {
+  size: 10vw;
+  height: 1.5vw;
+  position: relative;
+  left: 3vw; }
+
+#mapViewButton {
+  color: green;
+  font-weight: 400;
+  font-size: 1.5vw;
+  position: absolute;
+  float: right;
+  right: 5vw;
+  top: 1vw;
+  height: 3vw;
+  width: 15vw; }
+
+#gobackbutton {
+  position: absolute;
+  float: right;
+  top: 3vw;
+  right: 5vw;
+  width: 15vw;
+  color: blue;
+  height: 3vw;
+  font-weight: 400;
+  font-size: 1.5vw; }
+
+#taskForm {
+  width: 50vw; }
+
+#findbutton {
+  position: relative;
+  left: 4vw;
+  display: inline;
+  width: 7vw;
+  color: red;
+  height: 2vw;
+  margin-top: 1vw; }
+
+#submitbutton {
+  position: relative;
+  left: 11vw;
+  top: 3vw;
+  display: inline;
+  width: 7vw;
+  color: red;
+  height: 2vw;
+  margin-top: 1vw; }
+
+#cancelbutton {
+  position: relative;
+  left: 3vw;
+  display: inline;
+  width: 7vw;
+  color: blue;
+  height: 2vw;
+  margin-top: 1vw; }
+
+#editbutton {
+  position: relative;
+  left: 8vw;
+  width: 8vw;
+  height: 2vw;
+  color: blue;
+  background-color: #D9D9D9;
+  top: 12vw; }
+
+#closebutton {
+  position: relative;
+  left: 28vw;
+  width: 8vw;
+  height: 2vw;
+  color: green;
+  background-color: #D9D9D9;
+  top: 12vw; }
+
+#removebutton {
+  position: relative;
+  left: -12vw;
+  width: 8vw;
+  height: 2vw;
+  color: black;
+  background-color: #D9D9D9;
+  top: 12vw; }
+
+.sliderMark {
+  position: absolute;
+  font-size: 0.5vw; }
+
+#mapform2 {
+  width: 100%;
+  height: 50vw;
+  background-color: #A1D490; }
+
+#taskdiv {
+  width: 40vw;
+  height: 20vw;
+  position: relative;
+  top: 15vw;
+  left: 2vw; }
+
+#divMapViewForm {
+  width: 100%;
+  background-color: #A1D490; }
+
+#slider-range {
+  background-color: orange;
+  width: 40vw;
+  position: relative;
+  left: 5vw;
+  top: -3vw; }
+
+#divTaskEntryForm {
+  width: 60vw;
+  background-color: #ffcce6;
+  height: 30vw; }
+
+#divTaskEditForm {
+  background-color: #ff9999; }
+
+#mapDiv1 {
+  width: 70vw;
+  background-color: #A1D490;
+  height: 40vw; }
+
+.sliderStyle {
+  border: 1px;
+  border-style: solid;
+  border-color: black;
+  color: black;
+  width: 16vw; }
+
+.mapStyle {
+  background-color: yellow;
+  height: 20vw;
+  width: 20vw;
+  float: right;
+  position: relative;
+  top: -15vw;
+  left: 8vw; }
+
+.mapStyle2 {
+  background-color: yellow;
+  height: 30vw;
+  width: 45vw;
+  float: right;
+  border-color: blue;
+  border-style: solid;
+  border-width: 2px;
+  right: 2vw; }
+
+.mapStyle3 {
+  height: 20vw;
+  width: 20vw;
+  float: right;
+  position: relative;
+  background: #ffcce6;
+  border-style: solid;
+  border-color: blue;
+  border-width: 2px;
+  right: 1vw;
+  top: -vw; }
+
+.coordsbox {
+  width: 30%; }
+
+.mapsurround2 {
+  display: inline;
+  position: absolute;
+  top: 0.0vw;
+  border-style: solid;
+  border-color: black;
+  background-color: yellow; }
+
+#mapTaskEntry {
+  border-color: blue;
+  border-style: solid;
+  border-width: 0.3vw; }
+
+.active:hover {
+  background-color: gray; }
+
+.todaysdate:hover {
+  background-color: gray; }
+
+.firstrow {
+  font-family: Arial;
+  font-size: 2vw;
+  text-align: center;
+  border-style: solid;
+  border-color: navy;
+  background-color: #99ccff; }
+
+#calendarMonth {
+  margin: 2vw;
+  font: 4vw "Helvetica Neue", Helvetica, Arial; }
+
+#grid {
+  width: 100%;
+  border-style: solid;
+  border-color: blue; }
+
+.active {
+  border-style: solid;
+  border-color: navy;
+  border-width: 2px;
+  text-align: center;
+  font-size: 2vw;
+  padding: 1vw;
+  width: 13%; }
+
+.inactive {
+  border: #C0C0C0 solid; }
+
+.hidden {
+  display: none; }
+
+.visible {
+  display: inline;
+  position: absolute;
+  top: 10vw;
+  left: 20vw;
+  float: left;
+  border-style: solid;
+  border-color: black;
+  background-color: white;
+  width: 60vw;
+  height: 30vw; }
+
+.month-header {
+  z-index: 2;
+  border-bottom: 2px;
+  border-style: solid; }
+
+/*# sourceMappingURL=stylesheet.css.map */

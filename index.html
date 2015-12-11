@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>KK Calendar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+
+  <script src="http://code.jquery.com/jquery-2.1.4.min.js"> </script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="../../jquery-ui-1.11.4/jquery-ui.css">
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="../../jquery-ui-1.11.4/jquery-ui.js"></script>
+  
+  <script src="Model.js"></script>
+  <script src="Utilities.js"></script>
+  <script src="View.js"></script>
+  <script src="ViewForms.js"></script>
+  <script src="ViewEvents.js"></script>
+  
+
+</head>
+<body>
+
+ <script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true">
+   </script>
+  <script>
+
+
+$(function controllerSupremo(){  
+      
+    var bodyElement = $('body');
+    var currentMonthNumber = Utilities.getCurrentMonthNumber();
+    var currentMonthName = Utilities.getMonthName(currentMonthNumber); 
+    var currentYearNumber = Utilities.getYearNumber(); 
+    var dateToHighlight = Utilities.findTodaysDate(); 
+    var numDaysInMonth = Utilities.getDatesInCurrentMonth(currentYearNumber,currentMonthNumber);
+    
+    Model.storeNumberOfDaysInMonth(numDaysInMonth); 
+    Model.initialiseStorageObject(numDaysInMonth);
+    View.createCalendarPage();
+    View.setTodayHighlight(dateToHighlight);
+
+    ViewForms.createTaskEntryForm(bodyElement);
+    ViewForms.createTaskEditForm(bodyElement);
+    ViewForms.createMapView(bodyElement);
+  
+  //  .on( "click", handler )
+  
+    $('[data-active]').on('click',ViewEvents.showClickedOnDate);
+    $('#submitbutton').on('click',ViewEvents.saveTaskEntry);
+    $('#cancelbutton').on('click',ViewEvents.cancelTaskEntry);
+    $('#closebutton').on('click',ViewEvents.closeEditForm);  
+    $('#editbutton').on('click',ViewEvents.showEditForm);
+    $('#removebutton').on('click',ViewEvents.removeTask); 
+    $('#gobackbutton').on('click',ViewEvents.returnToCalendarScreen);
+
+    $("#findbutton").on('click',ViewEvents.findPostcode);
+    $("#mapViewButton").on('click',ViewEvents.showSummaryMap); 
+
+     });
+
+</script>
+</body>
+</html>

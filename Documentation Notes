@@ -1,0 +1,16 @@
+
+Nearly 700 lines of code reduced to 580 when adapted from JS to Jquery.
+Jquery version then split according to the MVC model into 10 different files containing at least 75  different functions to get&set values, and generate views.
+
+Styling provided in 4 files and compiled by SASS into 1 stylesheet. 
+_calButtons - defines styling for all buttons in application
+_calColors - defines all colors in application, including mixins.
+_calTextFormats - defines all headings and font styles.
+Stylesheet.scss - defines <div> dimensions and mapstyles.
+
+index.html: Is the starting file of the application, and contains the application Controller.
+Model.js - contains Javascript code to work with the data model behind the application. 
+Utilities.js - contains javascript functions that are generic and can be shared to other applications. eg. createGoogleMap.
+View.js - generates items required on the view screens. eg. 
+ViewEvents - defines the immediate code that is executed upon an EventListener receiving an Event.
+ViewForms - defines the format of the screen views.

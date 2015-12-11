@@ -1,0 +1,87 @@
+
+#postcode{
+  size:10vw;
+  height: 1.5vw;
+  position: relative;
+  left:3vw;
+}
+#mapViewButton{
+  color:green;
+  font-weight: 400;
+  font-size: 1.5vw;
+  position: absolute;
+  float:right;
+  right:5vw;
+  top:1vw;
+  height:3vw;
+  width:15vw;
+}
+#gobackbutton{
+  position:absolute;
+  float:right;
+  top:3vw;
+  right:5vw;
+  width:15vw;
+  color: blue;
+  height: 3vw;
+  font-weight: 400;
+  font-size: 1.5vw;
+}
+#taskForm{
+  width:50vw;
+}
+#findbutton{
+  position:relative;
+  left:4vw;
+ display:inline;
+  width:7vw;
+  color:red;
+  height:2vw;
+  margin-top: 1vw;
+}
+#submitbutton{
+  position:relative;
+  left:11vw;
+  top:3vw;
+ display:inline;
+  width:7vw;
+  color:red;
+  height:2vw;
+  margin-top: 1vw;
+}
+#cancelbutton{
+  position:relative;
+  left:3vw;
+  display:inline;
+  width:7vw;
+  color: blue;
+  height: 2vw;
+  margin-top: 1vw;
+}
+#editbutton{
+  position:relative;
+  left:8vw;
+  width:8vw;
+  height:2vw;
+  color: blue;
+  background-color: #D9D9D9;
+  top:12vw;
+}
+#closebutton{
+  position:relative;
+  left:28vw;
+  width:8vw;
+  height:2vw;
+  color: green;
+  background-color:#D9D9D9;
+   top:12vw;
+}
+#removebutton{
+  position:relative;
+  left:-12vw;
+  width:8vw;
+  height: 2vw;
+  color: black;
+  background-color: #D9D9D9;
+   top:12vw;
+}
