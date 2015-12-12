@@ -1,6 +1,7 @@
 var View = (function () {
   
     var starterMarkerIsOn = true;
+    var taskEntryFormShown = false;
     
       var currentMonthNumber = Utilities.getCurrentMonthNumber();
       var currentMonthName = Utilities.getMonthName(currentMonthNumber); 
@@ -10,15 +11,13 @@ var View = (function () {
     function createCalendarPage(){
       var bodyElement = $('body');
       var gridElement = $('#grid');
-      
+
       View.createPageHeader(currentMonthName,currentYearNumber,bodyElement);
       View.createGridOfDatesView(bodyElement);
       Model.createWeekdayLabelCells(gridElement);
 
       var headerCells = Model.getWeekdayCells();
-      console.log("dayHeaderCells",headerCells);
       var weekdayLabels = Model.getWeekdayLabels();
-      console.log("weekdayLabels",weekdayLabels);
 
       View.setWeekdayLabelsToColumns(headerCells, weekdayLabels);
      
@@ -43,7 +42,7 @@ var View = (function () {
     }
 
     function chooseAFormToDisplay(daysIndex){
-        if (daysIndex.task === ""){
+        if (daysIndex === null){
             return 'divTaskEntryForm'
             }  
         return 'divTaskEditForm';       
@@ -187,10 +186,8 @@ var View = (function () {
       console.log("Inside the createTaskListing");
       for (var counter=1;counter<numDaysInMonth+1;counter++){
           var selectedTask = Model.getExistingTask(counter);
-          if (selectedTask !== ""){
-                console.log("create me a task in listing");
-                $textBox4 = $('<div id="textBox4" class="task-list"></div>');
-                
+          if (selectedTask !== null){
+                $textBox4 = $('<div id="textBox4" class="task-list"></div>'); 
                 $textBox4.attr('data-tasklisting', counter);
                 var $lineBr = $('<br></br>'); 
                 $('#mapform2').append($lineBr).append($lineBr);
@@ -204,6 +201,7 @@ var View = (function () {
     function showMapView(){
         var formToChange = $('#divMapViewForm'); 
         formToChange.addClass('mapsurround2').removeClass('hidden'); 
+        var starterMarker = Model.getStarterMarkerOnSummary();
     }
 
     function createMapView(){
@@ -211,7 +209,7 @@ var View = (function () {
         var longitude = -0.0845579;
         var mapCreatedinSummaryDiv = Utilities.createGoogleMap(latitude,longitude,'mapSummaryDiv');
         var starterMarker = Utilities.createMapMarker(latitude,longitude,mapCreatedinSummaryDiv);
-        Model.storeStartMarker(starterMarker);
+        Model.storeStarterMarkerOnSummary(starterMarker);
     
         return mapCreatedinSummaryDiv;
     }
@@ -247,6 +245,7 @@ var View = (function () {
       var mapCreatedInTaskEntry = Utilities.createGoogleMap(latitude,longitude,'mapTaskEntry');  
       var markerCreated = Utilities.createMapMarker(latitude,longitude,mapCreatedInTaskEntry); 
       var storedMarker = Model.storeStarterMarker(markerCreated);
+      console.log("Ive just stored",markerCreated);
       } 
     
 
@@ -288,24 +287,41 @@ var View = (function () {
 
   function removeStartMarker(){
     marker = Model.getStarterMarker();
-    console.log(marker);
+    console.log("in remove starter marker",marker);
     marker.setMap(null);   
-    if (starterMarkerIsOn) {
-      Model.removeStarterMarker(marker);
-      starterMarker = false;
-    }
-  }
+   }
+  
 
   function showStartMarker(mapContainer){
     marker = Model.getStarterMarker();
     marker.setMap(mapContainer);
   }
 
+  function changeMapOnForm(formToChange){
+    if (formToChange === 'divTaskEntryForm') {
+          if  (!taskEntryFormShown) {
+            View.setMapOnForm(formToChange);
+           // View.repositionStarterMarkerOnTaskEntryForm();
+            taskEntryFormShown = true;
+            }   
+          }
+        if (formToChange === 'divTaskEditForm')  { 
+          if(!taskEditFormShown) {
+            View.setMapOnForm(formToChange);
+            }   
+          }
+  }
+
+  function repositionStarterMarkerOnTaskEntryForm(){
+    var markerNeeded = Model.getStarterMarker();
+    //place on map
+  }
   
   return {
     changeFormToVisible: changeFormToVisible,
     changeFormToHidden: changeFormToHidden,
     changeformHeader: changeformHeader,
+    changeMapOnForm:changeMapOnForm,
     chooseAFormToDisplay:chooseAFormToDisplay,
     removeTasksInSliderView:removeTasksInSliderView,
     createCalendarPage:createCalendarPage,
@@ -322,6 +338,7 @@ var View = (function () {
     highlightDate:highlightDate,
     removeAllMarkers:removeAllMarkers,
     removeStartMarker:removeStartMarker,
+    repositionStarterMarkerOnTaskEntryForm:repositionStarterMarkerOnTaskEntryForm,
     setMapOnForm:setMapOnForm,
     setTodayHighlight:setTodayHighlight,
     setWeekdayLabelsToColumns:setWeekdayLabelsToColumns, 

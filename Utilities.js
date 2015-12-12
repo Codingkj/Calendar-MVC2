@@ -51,7 +51,7 @@ var Utilities = (function () {
                             map: map,
                             title: 'Your task is here!',
                           });
-      console.log('Utilities mapmarker now..');
+      console.log('Utilities mapmarker now..',marker);
       return marker; 
     }
 

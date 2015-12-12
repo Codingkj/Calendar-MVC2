@@ -1,11 +1,7 @@
-var ViewEvents = (function () {
-    
-        var taskEntryFormShown = false;
-        var taskEditFormShown = false;
+var ViewEvents = (function () {     
 
     function showClickedOnDate(clickEvent){  
-        console.log("this event is",clickEvent);
-        console.log("just Event",event);
+       
         var dateSelected = clickEvent.target.textContent;
         Model.setDateSelected(dateSelected);  
 
@@ -17,21 +13,10 @@ var ViewEvents = (function () {
         var currentYearNumber = Utilities.getYearNumber(); 
         View.changeformHeader(dateSelected,currentMonthName,currentYearNumber);
         View.changeFormToVisible(formToChange);
-        if (formToChange === 'divTaskEntryForm') {
-          if  (!taskEntryFormShown) {
-            View.setMapOnForm(formToChange);
-            taskEntryFormShown = true;
-            }   
-          }
-        if (formToChange === 'divTaskEditForm')  { 
-          if(!taskEditFormShown) {
-            View.setMapOnForm(formToChange);
-            taskEditFormShown = true;
-            }   
-          }
-  
+        View.changeMapOnForm(formToChange);    
         View.displayTaskText(taskEntry);
         View.highlightDate(dateSelected);
+
         return dateSelected;
         }   
 
@@ -47,7 +32,7 @@ var ViewEvents = (function () {
     
         View.highlightDate(dateSelected);    
         View.changeFormToHidden('divTaskEntryForm');  
-        Model.clearTaskText(dateSelected); 
+        Model.removeTaskEntryText(dateSelected); 
         } 
 
     function cancelTaskEntry(event){
@@ -56,7 +41,7 @@ var ViewEvents = (function () {
         var dateSelected = Model.getDateSelected();                  
         View.changeFormToHidden('divTaskEntryForm');                      
         View.unHighlightDate(dateSelected);     
-        Model.clearTaskText(dateSelected);
+        Model.removeTaskEntryText(dateSelected);
         }
 
     function closeEditForm(event){

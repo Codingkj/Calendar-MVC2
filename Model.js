@@ -7,7 +7,8 @@ var Model = (function () {
   var currentDateSelected = "";
   var currentNumberOfDaysInMonth;
   var mapMarkers = {};
-  var firstMarker={};
+  var firstMarker;
+  var firstMarkerSummary;
 
   function initialiseStorageObject(numDaysInMonth){
     for (var count =1 ;count <numDaysInMonth+1;count++){
@@ -36,32 +37,42 @@ var Model = (function () {
   }
 
   function storeCoordsForLocation(dateSelected,latitude,longitude){
-    
-    days[dateSelected].coordinates = [latitude,longitude];
-    console.log("stored locations are now",days[dateSelected]);
+    console.log("store coords fr location",dateSelected,latitude,longitude); 
+    days[dateSelected] = dateSelected;  
+    days.latitude = latitude;
+    days.longitude = longitude;
+    console.log("stored locations are now",days.latitude,days.longitude);
   }
 
   function storeMarker(dateSelected,marker){
     date = dateSelected;
     mapMarkers[date] = marker;
    
-    console.log("I'm storing marker for day ",mapMarkers[date]);
+    console.log("I'm storing marker for day ",date,mapMarkers[date]);
   }
 
   function storeStarterMarker(marker){
     firstMarker = marker;
+    console.log("I've stored startermarker as..",firstMarker);
+  }
+
+  function storeStarterMarkerOnSummary(marker){
+    firstMarkerSummary = marker;
+    console.log("I've stored Summary startermarker as..",firstMarker);
   }
 
   function getStarterMarker(){
+    console.log("At GET firstmarker is..",firstMarker);
    return firstMarker;
   }
 
-  function removeStarterMarker(marker){
-    firstMarker = null;
-  }
-
   function storeTaskEntry(taskText,dateSelected){
-    days[dateSelected].task = taskText;
+    days[dateSelected]=dateSelected;
+    console.log("days selected when storing task is",days[dateSelected]);
+
+    days.task= taskText;
+    console.log("day task is...",taskText);
+    console.log("Storing task as",days.task);
   }
 
   function removeTaskEntry(dateSelected){
@@ -110,12 +121,17 @@ var Model = (function () {
     return NUMBER_OF_COLUMNS;
   }
 
-  function getExistingTask(dateSelected){    
-    return days[dateSelected].task;
+  function getExistingTask(dateSelected){  
+
+  console.log("Dateselected in GET days[dateSelected] is now",dateSelected, days[dateSelected]);
+  if (days[dateSelected] !== null){  
+    return days.task;
+  }
+  return null;
   }
 
-  function getExistingLocation(dateSelected){  
-      var coords = days[dateSelected][coordinates];
+  function getExistingLocation(dateSelected){ 
+      var coords = [days.latitude,days.longitude];
       return coords;
   }
   
@@ -143,7 +159,7 @@ var Model = (function () {
     return daysToUse;
   } 
 
-  function clearTaskText(){
+  function removeTaskEntryText(){
     $('#taskWords').val('');           //empty the textbox  
                   
   }
@@ -168,10 +184,14 @@ var Model = (function () {
         return tkCount;
   }
 
+  function getStarterMarkerOnSummary(){
+    return firstMarkerSummary;
+  }
+
 
   return {
     initialiseStorageObject:initialiseStorageObject,
-    clearTaskText:clearTaskText,
+    removeTaskEntryText:removeTaskEntryText,
     createWeekdayLabelCells:createWeekdayLabelCells,
     getColumns:getColumns,
     getMarkers:getMarkers,
@@ -185,9 +205,9 @@ var Model = (function () {
     getDateSelected:getDateSelected,
     getStartCell:getStartCell,
     getStarterMarker:getStarterMarker,
+    getStarterMarkerOnSummary:getStarterMarkerOnSummary,
     removeTaskEntry:removeTaskEntry,
     removeMarkersFromStorage:removeMarkersFromStorage,
-    removeStarterMarker:removeStarterMarker,
     setDateSelected:setDateSelected,
     setBlanksAtStartOfMonth:setBlanksAtStartOfMonth,
     setNumbersToRestOfMonth:setNumbersToRestOfMonth,
@@ -195,6 +215,7 @@ var Model = (function () {
     storeMarker:storeMarker,
     storeTaskEntry:storeTaskEntry,
     storeStarterMarker:storeStarterMarker,
+    storeStarterMarkerOnSummary:storeStarterMarkerOnSummary,
     storeNumberOfDaysInMonth:storeNumberOfDaysInMonth,
   };
   
