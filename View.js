@@ -161,7 +161,8 @@ var View = (function () {
        $.each(allMarkers,function(index) {            
           if ((index >= startDate) && (index <= stopDate)){
               console.log("value in range",index);
-              //is there a marker already there? if not add it.
+
+              //is there a marker already there? if not add it.How do I know marker is there?
           }
           else {
             console.log("Date outside range");
