@@ -55,6 +55,10 @@ var Utilities = (function () {
       return marker; 
     }
 
+  function moveMarkerToMap(marker,map){
+    marker.setMap(map);
+  }
+
 
   function validateTaskEntry(textEntered){
     

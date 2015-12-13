@@ -58,21 +58,17 @@ var Model = (function () {
    }
 
   
-
-
   function storeDayDetails(dateSelected,taskText,latitude,longitude){
     console.log("store coords fr location",dateSelected, taskText, latitude,longitude); 
     days[dateSelected].task = taskText;  
     days[dateSelected].latitude = latitude;
     days[dateSelected].longitude = longitude;
-    console.log("stored TASK are now",days[date].task);
+    console.log("stored TASK are now",days[dateSelected].task);
   }
 
   function storeMarker(dateSelected,marker){
-    date = dateSelected;
-    mapMarkers[date] = marker;
-   
-    console.log("I'm storing marker for day ",date,mapMarkers[date]);
+    mapMarkers[dateSelected] = marker;
+    console.log("I'm storing marker for day ");
   }
 
   function storeNumberOfDaysInMonth(numDaysInMonth){
@@ -94,15 +90,10 @@ var Model = (function () {
    return firstMarker;
   }
 
-  // function storeTaskEntry(dateSelected, taskText){
-  //   days[dateSelected] = dateSelected;
-  //   days[dateSelected].task = taskText;
-   
-  //   console.log("Storing task as",days[dateSelected],days.task);
-  // }
-
   function removeDayDetails(dateSelected){
-    days[dateSelected] = null;
+    days[dateSelected].task = "";
+    days[dateSelected].longitude=0;
+    days[dateSelected].latitude=0;
   }
 
   function removeMarkersFromStorage(){  //not finished.
@@ -148,7 +139,6 @@ var Model = (function () {
   }
 
   function getExistingTask(dateSelected){ 
-    console.log("REAL TASK",days[dateSelected].task);
     return days[dateSelected].task;
   }
 
@@ -183,11 +173,6 @@ var Model = (function () {
     } 
     return daysToUse;
   } 
-
-  function removeDayDetails(dateSelected){
-    days[dateSelected] = null; 
-            //empty the textbox                  
-  }
 
   function getTodaysCellOnCalendar(){
     var $alldates = $('.active');

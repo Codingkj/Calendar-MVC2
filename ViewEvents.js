@@ -1,17 +1,17 @@
 var ViewEvents = (function () {     
 
+        var listNotCreated = true;
+
     function showClickedOnDate(clickEvent){  
-       
         var dateSelected = clickEvent.target.textContent;
-        Model.setDateSelected(dateSelected);  
-        console.log("dateSelected has been set at",dateSelected);
-        var taskEntryExistingInModel = Model.getExistingTask(dateSelected); 
-        console.log("task existing is coming back as ",taskEntryExistingInModel);   
-        var formToChange = View.chooseAFormToDisplay(taskEntryExistingInModel);
-       
         var currentMonth = Utilities.getCurrentMonthNumber();
         var currentMonthName = Utilities.getMonthName(currentMonth);
         var currentYearNumber = Utilities.getYearNumber(); 
+
+        Model.setDateSelected(dateSelected);  
+        var taskEntryExistingInModel = Model.getExistingTask(dateSelected);   
+        var formToChange = View.chooseAFormToDisplay(taskEntryExistingInModel);
+        
         View.changeformHeader(dateSelected,currentMonthName,currentYearNumber);
         View.changeFormToVisible(formToChange);
         View.changeMapOnForm(formToChange);    
@@ -32,16 +32,15 @@ var ViewEvents = (function () {
         View.clearPostcode();
         View.clearTaskEntry();
         View.highlightDate(dateSelected);    
-        View.changeFormToHidden('divTaskEntryForm');  
-        
+        View.changeFormToHidden('divTaskEntryForm');       
         } 
 
     function cancelTaskEntry(event){
         event.preventDefault(); 
         event.stopPropagation();   
-        var dateSelected = Model.getDateSelected();                  
+        var dateSelected = Model.getDateSelected(); 
+        View.unHighlightDate(dateSelected);                   
         View.changeFormToHidden('divTaskEntryForm');                      
-        View.unHighlightDate(dateSelected);     
         View.clearTaskEntry();
         }
 
@@ -58,7 +57,8 @@ var ViewEvents = (function () {
       function showEditForm(event){
             event.preventDefault();
             event.stopPropagation(); 
-            var dateSelected = Model.getDateSelected();    
+            //put the text back in and correct marker and location.
+            View.changeFormToHidden('divTaskEditForm');  
             View.changeFormToVisible('divTaskEntryForm');     
       } 
 
@@ -68,7 +68,8 @@ var ViewEvents = (function () {
             var dateSelected = Model.getDateSelected();
             View.unHighlightDate(dateSelected); 
             Model.removeDayDetails(dateSelected);                    
-            View.changeFormToHidden('divTaskEditForm');  
+            View.changeFormToHidden('divTaskEditForm');
+            View.changeFormToHidden('divTaskEntryForm');  
       } 
       function returnToCalendarScreen(event){
             event.preventDefault(); 
@@ -76,7 +77,8 @@ var ViewEvents = (function () {
             var dateSelected = Model.getDateSelected(); 
             View.hideSummaryMap();                       
             View.removeTasksInSliderView();  
-            View.removeAllMarkers();                           
+            View.removeAllMarkers(); 
+            View.removeTaskList();                          
       }
 
       function findPostcode(event){
@@ -93,8 +95,10 @@ var ViewEvents = (function () {
         event.preventDefault(); 
         event.stopPropagation();
         console.log("got here too!!!!"); 
-        
-        View.createTaskListing();
+        if (listNotCreated){
+          View.createTaskListing();
+          listNotCreated = false;
+        }
         View.showTaskListing(1,31);
         
         View.showMapView();   

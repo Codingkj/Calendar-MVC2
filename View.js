@@ -58,23 +58,23 @@ var View = (function () {
     }
 
     function highlightDate(date){
-      var checkdates = document.getElementsByClassName('active');
-      for (var counter=0; counter < checkdates.length;counter++){
-          if (checkdates[counter].innerHTML == date.toString()){
-             var selectedDate = checkdates[counter];
-             $(selectedDate).attr('class','shaded');
+      var checkdates = $('.active');
+      $.each(checkdates,function(index) {
+            if (checkdates[index].innerHTML == date.toString()){
+              var selectedDate = checkdates[index];
+             $(selectedDate).addClass('shaded').removeClass('unshaded');
           }
-      }
+      });
     } 
 
     function unHighlightDate(date){
-        var checkdates = document.getElementsByClassName('shaded');
-        for (var counter=0; counter < checkdates.length;counter++){
-            if (checkdates[counter].innerHTML == date.toString()){
-              var selectedDate = checkdates[counter];
-              $(selectedDate).attr('class','unshaded');
+        var checkdates = $('.shaded');
+        $.each(checkdates,function(index) {
+            if (checkdates[index].innerHTML == date.toString()){
+              var selectedDate = checkdates[index];
+              $(selectedDate).addClass('unshaded').removeClass('shaded');
             }
-        }
+        });
     }
 
     function displayTaskText(taskText){
@@ -86,7 +86,7 @@ var View = (function () {
       for (var counter=0; counter<alldates.length;counter++){
         if (alldates[counter].textContent == dateToHighlight){
           var selectedBox = alldates[counter];
-          $(selectedBox).attr('class','todaysdate');
+          $(selectedBox).addClass('todaysdate').removeClass('active');
         }
       }
     }
@@ -157,11 +157,11 @@ var View = (function () {
 
 
      function filterMarkers(startDate,stopDate){
-
        var allMarkers = Model.getMarkers();
        $.each(allMarkers,function(index) {            
           if ((index >= startDate) && (index <= stopDate)){
               console.log("value in range",index);
+              //is there a marker already there? if not add it.
           }
           else {
             console.log("Date outside range");
@@ -205,8 +205,9 @@ var View = (function () {
         var latitude = 51.4996829;
         var longitude = -0.0845579;
         var mapCreatedinSummaryDiv = Utilities.createGoogleMap(latitude,longitude,'mapSummaryDiv');
-        var starterMarker = Utilities.createMapMarker(latitude,longitude,mapCreatedinSummaryDiv);
-        Model.storeStarterMarkerOnSummary(starterMarker);
+
+        // var starterMarker = Utilities.createMapMarker(latitude,longitude,mapCreatedinSummaryDiv);
+        // Model.storeStarterMarkerOnSummary(starterMarker);
     
         return mapCreatedinSummaryDiv;
     }
@@ -231,7 +232,7 @@ var View = (function () {
             var latitude = locationSelected[0];
             var longitude = locationSelected[1];
             var mapCreatedInTaskEdit = Utilities.createGoogleMap(latitude,longitude,'mapTaskEdit');
-            var markerCreated = Utilities.createMapMarker(latitude,longitude,mapCreatedInTaskEdit);
+            // var markerCreated = Utilities.createMapMarker(latitude,longitude,mapCreatedInTaskEdit);
             //Don't store marker as you have no way to find new value.
             return;
       }
@@ -245,7 +246,7 @@ var View = (function () {
     
 
     function createMultipleMarkers(startDate,stopDate,map){
-            console.log("Inside MM");
+            console.log("creating MultipleMarkers");
             var markerCreated; 
             var infowindow = new google.maps.InfoWindow();   
             View.removeStartMarker();
@@ -273,7 +274,7 @@ var View = (function () {
   
   function removeAllMarkers(){  //to be called when user navigates back to calendar view.
     var markersToRemove = Model.getMarkers();
-    $.each(tasklist,function(index) {
+    $.each(markersToRemove,function(index) {
       markersToRemove[index].setMap(null);
     });
     View.filterMarkers(markersToRemove);
@@ -296,7 +297,7 @@ var View = (function () {
     if (formToChange === 'divTaskEntryForm') {
           if  (!taskEntryFormShown) {
             View.setMapOnForm(formToChange);
-           // View.repositionStarterMarkerOnTaskEntryForm();
+            View.repositionStarterMarkerOnTaskEntryForm();
             taskEntryFormShown = true;
             }   
           }
@@ -308,6 +309,8 @@ var View = (function () {
 
   function repositionStarterMarkerOnTaskEntryForm(){
     var markerNeeded = Model.getStarterMarker();
+    var mapNeeded = $('.google.maps.Map');
+    Utilities.moveMarkerToMap(markerNeeded,mapNeeded);
     //place on map
   }
 
