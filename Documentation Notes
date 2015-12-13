@@ -14,3 +14,5 @@ Utilities.js - contains javascript functions that are generic and can be shared 
 View.js - generates items required on the view screens. eg. 
 ViewEvents - defines the immediate code that is executed upon an EventListener receiving an Event.
 ViewForms - defines the format of the screen views.
+
+In general functions that start with 'clear' are used to clear entries from the screen that the user has input.

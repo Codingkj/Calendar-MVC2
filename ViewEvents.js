@@ -4,35 +4,36 @@ var ViewEvents = (function () {
        
         var dateSelected = clickEvent.target.textContent;
         Model.setDateSelected(dateSelected);  
-
-        var taskEntry = Model.getExistingTask(dateSelected);    
-        var formToChange = View.chooseAFormToDisplay(taskEntry);
-      
+        console.log("dateSelected has been set at",dateSelected);
+        var taskEntryExistingInModel = Model.getExistingTask(dateSelected); 
+        console.log("task existing is coming back as ",taskEntryExistingInModel);   
+        var formToChange = View.chooseAFormToDisplay(taskEntryExistingInModel);
+       
         var currentMonth = Utilities.getCurrentMonthNumber();
         var currentMonthName = Utilities.getMonthName(currentMonth);
         var currentYearNumber = Utilities.getYearNumber(); 
         View.changeformHeader(dateSelected,currentMonthName,currentYearNumber);
         View.changeFormToVisible(formToChange);
         View.changeMapOnForm(formToChange);    
-        View.displayTaskText(taskEntry);
+        View.displayTaskText(taskEntryExistingInModel);
         View.highlightDate(dateSelected);
-
-        return dateSelected;
         }   
 
     function saveTaskEntry(event){
         event.preventDefault(); 
         event.stopPropagation();
-        
-        var textEntered = $('textarea').val(); 
-        Utilities.validateTaskEntry(textEntered);
-        
         var dateSelected = Model.getDateSelected();
-        Model.storeTaskEntry(textEntered,dateSelected);
-    
+        var textEntered = $('textarea').val(); 
+        var validText = Utilities.validateTaskEntry(textEntered);
+        var latitude = Model.getUnsavedLatitude();
+        var longitude = Model.getUnsavedLongitude(); 
+        Model.storeDayDetails(dateSelected, validText,latitude,longitude);
+
+        View.clearPostcode();
+        View.clearTaskEntry();
         View.highlightDate(dateSelected);    
         View.changeFormToHidden('divTaskEntryForm');  
-        Model.removeTaskEntryText(dateSelected); 
+        
         } 
 
     function cancelTaskEntry(event){
@@ -41,7 +42,7 @@ var ViewEvents = (function () {
         var dateSelected = Model.getDateSelected();                  
         View.changeFormToHidden('divTaskEntryForm');                      
         View.unHighlightDate(dateSelected);     
-        Model.removeTaskEntryText(dateSelected);
+        View.clearTaskEntry();
         }
 
     function closeEditForm(event){
@@ -58,7 +59,7 @@ var ViewEvents = (function () {
             event.preventDefault();
             event.stopPropagation(); 
             var dateSelected = Model.getDateSelected();    
-            View.changeFormToVisible('divTaskEditForm');     
+            View.changeFormToVisible('divTaskEntryForm');     
       } 
 
       function removeTask(event){
@@ -66,7 +67,7 @@ var ViewEvents = (function () {
             event.stopPropagation();
             var dateSelected = Model.getDateSelected();
             View.unHighlightDate(dateSelected); 
-            Model.removeTaskEntry(dateSelected);                    
+            Model.removeDayDetails(dateSelected);                    
             View.changeFormToHidden('divTaskEditForm');  
       } 
       function returnToCalendarScreen(event){
@@ -85,7 +86,6 @@ var ViewEvents = (function () {
             var search = $('#postcode').val();
             mapContainer = document.getElementById('mapTaskEntry');
             View.showPostcodeCoordinates(search,dateSelected,mapContainer); 
-
       }
 
 
@@ -96,8 +96,9 @@ var ViewEvents = (function () {
         
         View.createTaskListing();
         View.showTaskListing(1,31);
-        var mapCreated = View.createMapView();
+        
         View.showMapView();   
+        var mapCreated = View.addMapSummaryView();
         var currentMonthNumber = Utilities.getCurrentMonthNumber();
         var daysInMonth = Utilities.getDatesInCurrentMonth(2015,currentMonthNumber);
         var currentMonthName = Utilities.getMonthName(currentMonthNumber);

@@ -3,18 +3,47 @@ var Model = (function () {
   var DAY_NAMES = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']; 
   var NUMBER_OF_COLUMNS = 7;
   var dateSelected = "";
-  var days = {};
+  var days = {'1':{task:"", latitude:0, longitude:0},
+              '2':{task:"", latitude:0, longitude:0},
+              '3':{task:"", latitude:0, longitude:0},
+              '4':{task:"", latitude:0, longitude:0},
+              '5':{task:"", latitude:0, longitude:0},
+              '6':{task:"", latitude:0, longitude:0},
+              '7':{task:"", latitude:0, longitude:0},
+              '8':{task:"", latitude:0, longitude:0},
+              '9':{task:"", latitude:0, longitude:0},
+              '10':{task:"", latitude:0, longitude:0},
+              '11':{task:"", latitude:0, longitude:0},
+              '12':{task:"", latitude:0, longitude:0},
+              '13':{task:"", latitude:0, longitude:0},
+              '14':{task:"", latitude:0, longitude:0},
+              '15':{task:"", latitude:0, longitude:0},
+              '16':{task:"", latitude:0, longitude:0},
+              '17':{task:"", latitude:0, longitude:0},
+              '18':{task:"", latitude:0, longitude:0},
+              '19':{task:"", latitude:0, longitude:0},
+              '20':{task:"", latitude:0, longitude:0},
+              '21':{task:"", latitude:0, longitude:0},
+              '22':{task:"", latitude:0, longitude:0},
+              '23':{task:"", latitude:0, longitude:0},
+              '24':{task:"", latitude:0, longitude:0},
+              '25':{task:"", latitude:0, longitude:0},
+              '26':{task:"", latitude:0, longitude:0},
+              '27':{task:"", latitude:0, longitude:0},
+              '28':{task:"", latitude:0, longitude:0},
+              '29':{task:"", latitude:0, longitude:0},
+              '30':{task:"", latitude:0, longitude:0},
+              '31':{task:"", latitude:0, longitude:0}
+            };
+
   var currentDateSelected = "";
   var currentNumberOfDaysInMonth;
   var mapMarkers = {};
   var firstMarker;
   var firstMarkerSummary;
+  var unsavedLatitude = 0;
+  var unsavedLongitude = 0;
 
-  function initialiseStorageObject(numDaysInMonth){
-    for (var count =1 ;count <numDaysInMonth+1;count++){
-      days[count] = null;
-    }
-  }
 
   function createWeekdayLabelCells(gridElement){
      $.each(DAY_NAMES, function (index) {
@@ -28,20 +57,15 @@ var Model = (function () {
       });
    }
 
-  function storeNumberOfDaysInMonth(numDaysInMonth){
-    currentNumberOfDaysInMonth = numDaysInMonth;
-  }
+  
 
-  function getNumberOfDaysInMonth(){
-    return currentNumberOfDaysInMonth;
-  }
 
-  function storeCoordsForLocation(dateSelected,latitude,longitude){
-    console.log("store coords fr location",dateSelected,latitude,longitude); 
-    days[dateSelected] = dateSelected;  
-    days.latitude = latitude;
-    days.longitude = longitude;
-    console.log("stored locations are now",days.latitude,days.longitude);
+  function storeDayDetails(dateSelected,taskText,latitude,longitude){
+    console.log("store coords fr location",dateSelected, taskText, latitude,longitude); 
+    days[dateSelected].task = taskText;  
+    days[dateSelected].latitude = latitude;
+    days[dateSelected].longitude = longitude;
+    console.log("stored TASK are now",days[date].task);
   }
 
   function storeMarker(dateSelected,marker){
@@ -49,6 +73,10 @@ var Model = (function () {
     mapMarkers[date] = marker;
    
     console.log("I'm storing marker for day ",date,mapMarkers[date]);
+  }
+
+  function storeNumberOfDaysInMonth(numDaysInMonth){
+    currentNumberOfDaysInMonth = numDaysInMonth;
   }
 
   function storeStarterMarker(marker){
@@ -66,17 +94,15 @@ var Model = (function () {
    return firstMarker;
   }
 
-  function storeTaskEntry(taskText,dateSelected){
-    days[dateSelected]=dateSelected;
-    console.log("days selected when storing task is",days[dateSelected]);
+  // function storeTaskEntry(dateSelected, taskText){
+  //   days[dateSelected] = dateSelected;
+  //   days[dateSelected].task = taskText;
+   
+  //   console.log("Storing task as",days[dateSelected],days.task);
+  // }
 
-    days.task= taskText;
-    console.log("day task is...",taskText);
-    console.log("Storing task as",days.task);
-  }
-
-  function removeTaskEntry(dateSelected){
-    days[dateSelected].task = "";
+  function removeDayDetails(dateSelected){
+    days[dateSelected] = null;
   }
 
   function removeMarkersFromStorage(){  //not finished.
@@ -121,20 +147,19 @@ var Model = (function () {
     return NUMBER_OF_COLUMNS;
   }
 
-  function getExistingTask(dateSelected){  
-
-  console.log("Dateselected in GET days[dateSelected] is now",dateSelected, days[dateSelected]);
-  if (days[dateSelected] !== null){  
-    return days.task;
-  }
-  return null;
+  function getExistingTask(dateSelected){ 
+    console.log("REAL TASK",days[dateSelected].task);
+    return days[dateSelected].task;
   }
 
   function getExistingLocation(dateSelected){ 
-      var coords = [days.latitude,days.longitude];
-      return coords;
+      return [days[dateSelected].latitude,days[dateSelected].longitude]
   }
   
+  function getNumberOfDaysInMonth(){
+    return currentNumberOfDaysInMonth;
+  }
+
   function setBlanksAtStartOfMonth(currentMonthName,startCell){    
     var cellsThatCanHaveDates=$('datecell');    
     var daysToUse=[];
@@ -159,9 +184,9 @@ var Model = (function () {
     return daysToUse;
   } 
 
-  function removeTaskEntryText(){
-    $('#taskWords').val('');           //empty the textbox  
-                  
+  function removeDayDetails(dateSelected){
+    days[dateSelected] = null; 
+            //empty the textbox                  
   }
 
   function getTodaysCellOnCalendar(){
@@ -177,7 +202,7 @@ var Model = (function () {
   function getNumberOfTasksInRange(startDate, endDate){
     var tkCount=0;
     for (var iterator=startDate;iterator<endDate+1; iterator++){
-              if (days[iterator].task !==""){
+              if (days[iterator].task !=="") {
                         tkCount=tkCount+1;
               }
           }
@@ -188,10 +213,24 @@ var Model = (function () {
     return firstMarkerSummary;
   }
 
+  function getUnsavedLatitude(){
+    return unsavedLatitude;
+  }
+
+  function getUnsavedLongitude(){
+    return unsavedLongitude;
+  }
+
+  function storeUnsavedLatitude(latitude){
+    unsavedLatitude = latitude;
+  }
+  
+  function storeUnsavedLongitude(longitude){
+    unsavedLongitude = longitude;
+  }
 
   return {
-    initialiseStorageObject:initialiseStorageObject,
-    removeTaskEntryText:removeTaskEntryText,
+    removeDayDetails:removeDayDetails,
     createWeekdayLabelCells:createWeekdayLabelCells,
     getColumns:getColumns,
     getMarkers:getMarkers,
@@ -206,17 +245,21 @@ var Model = (function () {
     getStartCell:getStartCell,
     getStarterMarker:getStarterMarker,
     getStarterMarkerOnSummary:getStarterMarkerOnSummary,
-    removeTaskEntry:removeTaskEntry,
+    getUnsavedLatitude:getUnsavedLatitude,
+    getUnsavedLongitude:getUnsavedLongitude,
+    // initialiseStorageObject:initialiseStorageObject,
+    removeDayDetails:removeDayDetails,
     removeMarkersFromStorage:removeMarkersFromStorage,
     setDateSelected:setDateSelected,
     setBlanksAtStartOfMonth:setBlanksAtStartOfMonth,
     setNumbersToRestOfMonth:setNumbersToRestOfMonth,
-    storeCoordsForLocation:storeCoordsForLocation,
+    storeDayDetails:storeDayDetails,
     storeMarker:storeMarker,
-    storeTaskEntry:storeTaskEntry,
     storeStarterMarker:storeStarterMarker,
     storeStarterMarkerOnSummary:storeStarterMarkerOnSummary,
     storeNumberOfDaysInMonth:storeNumberOfDaysInMonth,
+    storeUnsavedLongitude:storeUnsavedLongitude,
+    storeUnsavedLatitude:storeUnsavedLatitude,
   };
   
 })();

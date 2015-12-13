@@ -42,7 +42,7 @@ var View = (function () {
     }
 
     function chooseAFormToDisplay(daysIndex){
-        if (daysIndex === null){
+        if (daysIndex === ""){
             return 'divTaskEntryForm'
             }  
         return 'divTaskEditForm';       
@@ -92,10 +92,6 @@ var View = (function () {
     }
 
     function setWeekdayLabelsToColumns(headerCells,day_names){
-     console.log("headercells are",headerCells);
-     console.log("day_names",day_names);
-     console.log("day-Names[1]",day_names[1]);
-     console.log("headercells[1].textContent",headerCells[1].textContent);
      for (var counter=0;counter<day_names.length-1; counter++) {
           headerCells[counter].html = day_names[counter];
         }
@@ -128,15 +124,16 @@ var View = (function () {
             }  
             var data = JSON.parse(xhr.responseText);
 
-            var latitudeReturnedFromLookup= data.result.latitude;
-            var longitudeReturnedFromLookup= data.result.longitude;
+            var latitudeReturnedFromLookup = data.result.latitude;
+            var longitudeReturnedFromLookup = data.result.longitude;
 
             console.log('values are date,lat,lng',dateSelected,latitudeReturnedFromLookup,longitudeReturnedFromLookup);
             View.removeStartMarker();
             var mapCreated = Utilities.createGoogleMap(latitudeReturnedFromLookup,longitudeReturnedFromLookup,'mapTaskEntry');
             var markerCreated = Utilities.createMapMarker(latitudeReturnedFromLookup, longitudeReturnedFromLookup ,mapCreated); 
             Model.storeMarker(dateSelected, markerCreated);
-            Model.storeCoordsForLocation(dateSelected,latitudeReturnedFromLookup,longitudeReturnedFromLookup);          
+            Model.storeUnsavedLatitude(latitudeReturnedFromLookup);
+            Model.storeUnsavedLongitude(longitudeReturnedFromLookup);          
         }     
         xhr.send();
     }
@@ -186,7 +183,7 @@ var View = (function () {
       console.log("Inside the createTaskListing");
       for (var counter=1;counter<numDaysInMonth+1;counter++){
           var selectedTask = Model.getExistingTask(counter);
-          if (selectedTask !== null){
+          if (selectedTask !== ""){
                 $textBox4 = $('<div id="textBox4" class="task-list"></div>'); 
                 $textBox4.attr('data-tasklisting', counter);
                 var $lineBr = $('<br></br>'); 
@@ -204,7 +201,7 @@ var View = (function () {
         var starterMarker = Model.getStarterMarkerOnSummary();
     }
 
-    function createMapView(){
+    function addMapSummaryView(){
         var latitude = 51.4996829;
         var longitude = -0.0845579;
         var mapCreatedinSummaryDiv = Utilities.createGoogleMap(latitude,longitude,'mapSummaryDiv');
@@ -231,8 +228,6 @@ var View = (function () {
       var dateSelected = Model.getDateSelected();
       if (formToChange === 'divTaskEditForm'){
             var locationSelected = Model.getExistingLocation(dateSelected);
-            console.log('locationselected overall object',locationSelected);
-            console.log('locationSelected 0....',locationSelected[0]);
             var latitude = locationSelected[0];
             var longitude = locationSelected[1];
             var mapCreatedInTaskEdit = Utilities.createGoogleMap(latitude,longitude,'mapTaskEdit');
@@ -305,16 +300,23 @@ var View = (function () {
             taskEntryFormShown = true;
             }   
           }
-        if (formToChange === 'divTaskEditForm')  { 
-          if(!taskEditFormShown) {
+    else if (formToChange === 'divTaskEditForm')  { 
             View.setMapOnForm(formToChange);
             }   
-          }
-  }
+    }
+
 
   function repositionStarterMarkerOnTaskEntryForm(){
     var markerNeeded = Model.getStarterMarker();
     //place on map
+  }
+
+  function clearPostcode(){
+    var postcodeEntry = $('#postcode').val('')
+  }
+
+  function clearTaskEntry(){
+    var taskEntry = $('textarea').val('');
   }
   
   return {
@@ -323,10 +325,11 @@ var View = (function () {
     changeformHeader: changeformHeader,
     changeMapOnForm:changeMapOnForm,
     chooseAFormToDisplay:chooseAFormToDisplay,
-    removeTasksInSliderView:removeTasksInSliderView,
+    clearPostcode:clearPostcode,
+    clearTaskEntry:clearTaskEntry,
     createCalendarPage:createCalendarPage,
     createGridOfDatesView:createGridOfDatesView,
-    createMapView:createMapView,
+    addMapSummaryView:addMapSummaryView,
     createPageHeader:createPageHeader,
     createMultipleMarkers:createMultipleMarkers,
     // createSlider:createSlider,
@@ -338,6 +341,7 @@ var View = (function () {
     highlightDate:highlightDate,
     removeAllMarkers:removeAllMarkers,
     removeStartMarker:removeStartMarker,
+    removeTasksInSliderView:removeTasksInSliderView,
     repositionStarterMarkerOnTaskEntryForm:repositionStarterMarkerOnTaskEntryForm,
     setMapOnForm:setMapOnForm,
     setTodayHighlight:setTodayHighlight,

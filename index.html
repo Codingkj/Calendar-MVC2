@@ -35,9 +35,9 @@ $(function controllerSupremo(){
     var currentYearNumber = Utilities.getYearNumber(); 
     var dateToHighlight = Utilities.findTodaysDate(); 
     var numDaysInMonth = Utilities.getDatesInCurrentMonth(currentYearNumber,currentMonthNumber);
-    
     Model.storeNumberOfDaysInMonth(numDaysInMonth); 
-    Model.initialiseStorageObject(numDaysInMonth);
+   
+    // Model.initialiseStorageObject(numDaysInMonth);
     View.createCalendarPage();
     View.setTodayHighlight(dateToHighlight);
 

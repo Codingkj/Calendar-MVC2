@@ -56,11 +56,12 @@ var Utilities = (function () {
     }
 
 
-  function validateTaskEntry(taskText){
-    if (taskText===""){
+  function validateTaskEntry(textEntered){
+    
+    if (textEntered === ""){
           return ('Hey, enter something before you leave - or press Cancel');   
         }
-      return null;
+      return textEntered;
 }
   
   return {
