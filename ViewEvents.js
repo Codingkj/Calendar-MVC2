@@ -104,7 +104,7 @@ var ViewEvents = (function () {
         View.showMapView();   
         var mapCreated = View.addMapSummaryView();
         var currentMonthNumber = Utilities.getCurrentMonthNumber();
-        var daysInMonth = Utilities.getDatesInCurrentMonth(2015,currentMonthNumber);
+        var daysInMonth = Model.getNumberOfDaysInMonth();
         var currentMonthName = Utilities.getMonthName(currentMonthNumber);
         
         View.createMultipleMarkers(1,daysInMonth,mapCreated);
@@ -124,7 +124,6 @@ var ViewEvents = (function () {
                    },
             start: function( event, ui ) {
                       $( "#startvalue" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-                      // View.removeAllMarkers();
 
                    },
             stop: function( event, ui ) {
@@ -132,11 +131,9 @@ var ViewEvents = (function () {
                       $( "#stopvalue" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 
                       View.showTaskListing(ui.values[0],ui.values[1]);
-                      View.createMultipleMarkers(ui.values[0],ui.values[1],mapCreated);
+                      // View.createMultipleMarkers(ui.values[0],ui.values[1],mapCreated);
                       View.filterMarkers(ui.values[0],ui.values[1]);
-
-
-                          
+                      
                     },  //end of slider stop function
                 }); //end of .slider function
          

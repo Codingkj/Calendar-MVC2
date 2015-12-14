@@ -59,7 +59,6 @@ var Utilities = (function () {
     marker.setMap(map);
   }
 
-
   function validateTaskEntry(textEntered){
     
     if (textEntered === ""){
@@ -76,7 +75,8 @@ var Utilities = (function () {
     findTodaysDate:findTodaysDate,
     createGoogleMap:createGoogleMap,
     createMapMarker:createMapMarker,
-    validateTaskEntry:validateTaskEntry
+    validateTaskEntry:validateTaskEntry,
+    moveMarkerToMap:moveMarkerToMap
   };
   
 })();

@@ -158,15 +158,21 @@ var View = (function () {
 
      function filterMarkers(startDate,stopDate){
        var allMarkers = Model.getMarkers();
+   
        $.each(allMarkers,function(index) {            
           if ((index >= startDate) && (index <= stopDate)){
-              console.log("value in range",index);
 
-              //is there a marker already there? if not add it.How do I know marker is there?
+              allMarkers[index].visible = true;
+              console.log("allMarkers[index] is a ....",allMarkers[index]);
+              var markerNeeded = allMarkers[index];
+              markerNeeded.setVisible(true); 
           }
           else {
             console.log("Date outside range");
-            allMarkers[index].setMap(null);
+            console.log("allMarkers.marker is a ....",allMarkers[index]);
+              var markerNeeded = allMarkers[index];
+              markerNeeded.setVisible(false);
+
           }
       });
      }
@@ -285,7 +291,7 @@ var View = (function () {
   function removeStartMarker(){
     marker = Model.getStarterMarker();
     console.log("in remove starter marker",marker);
-    marker.setMap(null);   
+    marker.setVisible(false);   
    }
   
 
@@ -310,9 +316,7 @@ var View = (function () {
 
   function repositionStarterMarkerOnTaskEntryForm(){
     var markerNeeded = Model.getStarterMarker();
-    var mapNeeded = $('.google.maps.Map');
-    Utilities.moveMarkerToMap(markerNeeded,mapNeeded);
-    //place on map
+    markerNeeded.visible = true;
   }
 
   function clearPostcode(){
