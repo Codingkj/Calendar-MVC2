@@ -27,8 +27,7 @@ var Utilities = (function () {
   }
 
 
-  function createGoogleMap(latitude,longitude,mapContainer){
-     
+  function createGoogleMap(latitude,longitude,mapContainer){   
       console.log("lat-lng passed into createGoogleMap...",latitude,longitude,mapContainer); 
     
       var mapOptions={ 
@@ -36,9 +35,8 @@ var Utilities = (function () {
             zoom:12   };
     
       var map = new google.maps.Map(document.getElementById(mapContainer),mapOptions);
-
       google.maps.event.trigger(document.getElementById(mapContainer), 'resize');
-      console.log('map is...',map);
+
     return map;
   }
 
@@ -51,7 +49,6 @@ var Utilities = (function () {
                             map: map,
                             title: 'Your task is here!',
                           });
-      console.log('Utilities mapmarker now..',marker);
       return marker; 
     }
 
@@ -66,17 +63,23 @@ var Utilities = (function () {
         }
       return textEntered;
 }
+
+// function moveToLocation(latitude, longitude){
+//     var center = new google.maps.LatLng(latitude, longitude);
+//     map.panTo(center);
+// }  
   
   return {
+    createGoogleMap:createGoogleMap,
+    createMapMarker:createMapMarker,
+    findTodaysDate:findTodaysDate,
     getCurrentMonthNumber: getCurrentMonthNumber,
     getYearNumber:getYearNumber,
     getMonthName:getMonthName,
     getDatesInCurrentMonth:getDatesInCurrentMonth,
-    findTodaysDate:findTodaysDate,
-    createGoogleMap:createGoogleMap,
-    createMapMarker:createMapMarker,
+    moveMarkerToMap:moveMarkerToMap,
     validateTaskEntry:validateTaskEntry,
-    moveMarkerToMap:moveMarkerToMap
+    
   };
   
 })();

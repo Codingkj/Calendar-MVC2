@@ -39,8 +39,8 @@ var Model = (function () {
   var currentDateSelected = "";
   var currentNumberOfDaysInMonth;
   var mapMarkers = {};
-  var firstMarker;
-  var firstMarkerSummary;
+  var starterMarker;
+  var starterMarkerSummary;
   var unsavedLatitude = 0;
   var unsavedLongitude = 0;
 
@@ -63,7 +63,6 @@ var Model = (function () {
     days[dateSelected].task = taskText;  
     days[dateSelected].latitude = latitude;
     days[dateSelected].longitude = longitude;
-    console.log("stored TASK are now",days[dateSelected].task);
   }
 
   function storeMarker(dateSelected,marker){
@@ -76,18 +75,18 @@ var Model = (function () {
   }
 
   function storeStarterMarker(marker){
-    firstMarker = marker;
-    console.log("I've stored startermarker as..",firstMarker);
+    starterMarker = marker;
+    console.log("I've stored startermarker as..",starterMarker);
   }
 
   function storeStarterMarkerOnSummary(marker){
-    firstMarkerSummary = marker;
-    console.log("I've stored Summary startermarker as..",firstMarker);
+    starterMarkerSummary = marker;
+    console.log("I've stored Summary startermarker as..",starterMarker);
   }
 
   function getStarterMarker(){
-    console.log("At GET firstmarker is..",firstMarker);
-   return firstMarker;
+    console.log("At GETstarterMarker is..",starterMarker);
+   return starterMarker;
   }
 
   function removeDayDetails(dateSelected){
@@ -130,7 +129,6 @@ var Model = (function () {
 
   function getWeekdayCells(){
     var $headers = $('.firstrow');
-    console.log("Inside get Weekday cells");
     return $headers;
   }
 
@@ -195,7 +193,7 @@ var Model = (function () {
   }
 
   function getStarterMarkerOnSummary(){
-    return firstMarkerSummary;
+    return starterMarkerSummary;
   }
 
   function getUnsavedLatitude(){
@@ -204,6 +202,14 @@ var Model = (function () {
 
   function getUnsavedLongitude(){
     return unsavedLongitude;
+  }
+
+  function getMapContainer(string){
+  
+    var map2container = document.getElementById('mapTaskEntry');
+    // console.log("Map element is..",mapContainer);
+     console.log("Map element is..",map2container);
+    return map2container;
   }
 
   function storeUnsavedLatitude(latitude){
@@ -227,6 +233,7 @@ var Model = (function () {
     getNumberOfDaysInMonth:getNumberOfDaysInMonth,
     getExistingLocation:getExistingLocation,
     getDateSelected:getDateSelected,
+    getMapContainer:getMapContainer,
     getStartCell:getStartCell,
     getStarterMarker:getStarterMarker,
     getStarterMarkerOnSummary:getStarterMarkerOnSummary,

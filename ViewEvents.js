@@ -1,22 +1,30 @@
 var ViewEvents = (function () {     
 
         var listNotCreated = true;
+        var firstMapsCreated = false;
 
     function showClickedOnDate(clickEvent){  
         var dateSelected = clickEvent.target.textContent;
         var currentMonth = Utilities.getCurrentMonthNumber();
         var currentMonthName = Utilities.getMonthName(currentMonth);
         var currentYearNumber = Utilities.getYearNumber(); 
-
+        console.log("just clicked on date ",dateSelected);
         Model.setDateSelected(dateSelected);  
         var taskEntryExistingInModel = Model.getExistingTask(dateSelected);   
         var formToChange = View.chooseAFormToDisplay(taskEntryExistingInModel);
         
         View.changeformHeader(dateSelected,currentMonthName,currentYearNumber);
         View.changeFormToVisible(formToChange);
-        View.changeMapOnForm(formToChange);    
+        View.setMapOnForm(formToChange);
+        
+        // View.changeMapOnForm(formToChange);
+        var mapContainer = Model.getMapContainer('mapTaskEntry');
+        console.log("got to 4 mapContainer is",mapContainer);
+        View.showStartMarker(mapContainer);
+        console.log("got to 5");   
         View.displayTaskText(taskEntryExistingInModel);
         View.highlightDate(dateSelected);
+        console.log("end of showClickedOnDate!");
         }   
 
     function saveTaskEntry(event){
@@ -78,7 +86,8 @@ var ViewEvents = (function () {
             View.hideSummaryMap();                       
             View.removeTasksInSliderView();  
             View.removeAllMarkers(); 
-            View.removeTaskList();                          
+            listNotCreated = true;
+            View.removeTasksInSliderView();                      
       }
 
       function findPostcode(event){
@@ -94,7 +103,7 @@ var ViewEvents = (function () {
       function showSummaryMap(event) {   // to display all tasks on 1 map
         event.preventDefault(); 
         event.stopPropagation();
-        console.log("got here too!!!!"); 
+    
         if (listNotCreated){
           View.createTaskListing();
           listNotCreated = false;
