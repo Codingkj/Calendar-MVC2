@@ -182,11 +182,12 @@ var Model = (function () {
     }
   }
 
-  function getNumberOfTasksInRange(startDate, endDate){
+  function getNumberOfTasksInRange(numDaysInMonth){
     var tkCount=0;
-    for (var iterator=startDate;iterator<endDate+1; iterator++){
-              if (days[iterator].task !=="") {
-                        tkCount=tkCount+1;
+    for (var iterator=1;iterator<numDaysInMonth; iterator++){
+        var task = Model.getExistingTask(iterator);
+        if (task !=="") {
+                tkCount=tkCount+1;
               }
           }
         return tkCount;

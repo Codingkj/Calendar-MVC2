@@ -35,6 +35,11 @@
   display: block;
   top: 14vw; }
 
+#textBox3 {
+  font: 1vw Helvetica, Arial;
+  position: relative;
+  left: 3vw; }
+
 #textBox4 {
   width: 35vw;
   background-color: white;

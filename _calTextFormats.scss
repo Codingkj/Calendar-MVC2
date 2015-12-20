@@ -2,6 +2,7 @@
 $headfont:4vw "Helvetica Neue", Helvetica, Arial;
 $requestfont:1vw Helvetica,Arial;
 $monthfont: 4vw "Helvetica Neue", Helvetica, Arial;
+$secondheader:2vw "Helvetica Neue", Helvetica, Arial;
 
 .error-text{
   font-size: 0.8vw;
@@ -21,6 +22,11 @@ $monthfont: 4vw "Helvetica Neue", Helvetica, Arial;
   text-align: left;
   display:block;
   top:14vw;
+}
+#textBox3{
+  font:$requestfont;
+  position: relative;
+  left:3vw;
 }
 #textBox4{
   width:35vw;
@@ -50,12 +56,12 @@ $monthfont: 4vw "Helvetica Neue", Helvetica, Arial;
   font-style: italic;
 }
 #mapheader{
-  font: 2vw "Helvetica Neue", Helvetica, Arial; 
+  font:  $secondheader;
   text-align: center;
 }
 
 .headingtext {
-  font: 2vw "Helvetica Neue", Helvetica, Arial; 
+  font: $secondheader;
   text-align: center;
 }
 .todaysdate{

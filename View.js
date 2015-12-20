@@ -112,7 +112,7 @@ var View = (function () {
    //find all elements on tasklisting and remove, ready for re-creation.  
       $('[data-tasklisting]').remove();
     }
-    
+
     function showPostcodeCoordinates(search,dateSelected,mapcontainer){
         var url=('http://api.postcodes.io/postcodes/'+ search);
        
@@ -180,7 +180,9 @@ var View = (function () {
       var currentYear = Utilities.getYearNumber();
       var currentMonth = Utilities.getCurrentMonthNumber();
       var numDaysInMonth = Utilities.getDatesInCurrentMonth(currentYear,currentMonth);
-      console.log("Inside the createTaskListing");
+      var numOfTasks = Model.getNumberOfTasksInRange(numDaysInMonth);
+       var $textBox3 = $('<p id="textBox3">There are '+ numOfTasks + ' in range. Please use slider handles to adjust range.</p>');
+       $('#mapform2').append($textBox3); 
       for (var counter=1;counter<numDaysInMonth+1;counter++){
           var selectedTask = Model.getExistingTask(counter);
           if (selectedTask !== ""){
@@ -189,10 +191,11 @@ var View = (function () {
                 var $lineBr = $('<br></br>'); 
                 $('#mapform2').append($lineBr).append($lineBr);
                 var monthName = Utilities.getMonthName(currentMonth);
-                $textBox4.append(counter + ' ' + monthName + ' ' + selectedTask).append($lineBr);  
+                $textBox4.append(counter + ' ' + monthName + ':  ' + selectedTask).append($lineBr);  
                 $('#mapform2').append($textBox4);  
                 }
           }
+
     }
 
     function showMapView(){
@@ -245,8 +248,6 @@ var View = (function () {
         starterMarkerSet = true;
         console.log("QQQQQQ storing starter marker");
       }
-      
-  
     
 
     function createMultipleMarkers(startDate,stopDate,map){
@@ -296,13 +297,8 @@ var View = (function () {
    }
   
   function showStartMarker(mapContainer){
-    console.log("got to showStartMarker and mapContainer is..",mapContainer);
     marker = Model.getStarterMarker();
-    console.log("VALue of marker now is",marker);
     marker.setVisible(true);
-    console.log("VAlue of marker is now",marker);
-    // marker.setMap(mapContainer);
-    console.log("VAlue of marker is now",marker);  //whats changed
   }
 
   function changeMapOnForm(formToChange){
